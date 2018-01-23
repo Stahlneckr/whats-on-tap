@@ -1,3 +1,4 @@
+require("babel-polyfill");
 const logger = require("winston");
 const puppeteer = require("puppeteer");
 

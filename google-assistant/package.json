@@ -1,34 +1,33 @@
 {
   "name": "whats-on-tap",
   "description": "",
-  "author": "Stahlneckr",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node index.js",
-    "precommit": "lint-staged",
-    "update-packages": "sudo npm install -g npm-check-updates && npm-check-updates -u"
-  },
-  "lint-staged": {
-    "*.{js,md}": [
-      "prettier --write --trailing-comma es5 --arrow-parens always --print-width 160"
-    ],
-    "*.js": [
-      "eslint --ignore-pattern node_modules/ _*"
-    ]
+    "start": "node index.working.js",
+    "build": "npm run prettier && npm run eslint && npm run babel",
+    "prettier": "find . -name '*.js' -or -name '*.json' -not -name 'index.js' -print | xargs prettier --trailing-comma es5 --arrow-parens always --print-width 160 --write",
+    "eslint": "eslint *.js --ignore-pattern index.js --ignore-pattern node_modules/",
+    "babel": "./node_modules/.bin/babel --out-file index.js --presets=env,babel-preset-minify --plugins=transform-async-generator-functions index.working.js",
+    "update-packages": "sudo npm install -g npm-check-updates && npm-check-updates -u",
+    "precommit": "npm run build"
   },
   "dependencies": {
     "actions-on-google": "^1.7.0",
+    "babel-polyfill": "^6.26.0",
     "puppeteer": "^1.0.0",
     "winston": "^2.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-generator-functions": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-minify": "^0.2.0",
     "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
     "prettier": "^1.9.2"
   }
 }
