@@ -9,9 +9,21 @@
     "clean": "npm run prettier && npm run eslint",
     "prettier": "find . -name '*.js' -or -name '*.json' -not -name 'index.js' -print | xargs prettier --trailing-comma es5 --arrow-parens always --print-width 180 --write",
     "eslint": "eslint *.js --ignore-pattern index.js --ignore-pattern node_modules/",
-    "babel": "./node_modules/.bin/babel --out-file index.js --presets=env,babel-preset-minify --plugins=transform-async-generator-functions index.working.js",
+    "babel": "./node_modules/.bin/babel index.working.js --out-file index.js",
     "update-packages": "sudo npm install -g npm-check-updates && npm-check-updates -u",
     "precommit": "npm run clean"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "6.11.1"
+          }
+        }
+      ]
+    ]
   },
   "dependencies": {
     "actions-on-google": "^1.7.0",
