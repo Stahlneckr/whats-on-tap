@@ -9,12 +9,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write --trailing-comma es5 --arrow-parens always --print-width 120"
-    ],
-    "*.{js,jsx}": [
-      "eslint --ignore-pattern node_modules/ _*"
-    ]
+    "*.{js,json,css,md}": ["prettier --write --trailing-comma es5 --arrow-parens always --print-width 120"],
+    "*.{js,jsx}": ["eslint --ignore-pattern node_modules/ _*"]
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -29,7 +25,6 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "^0.14.3",
-    "lint-staged": "^6.0.1",
     "prettier": "^1.9.2"
   }
 }
