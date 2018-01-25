@@ -1,11 +1,11 @@
 // Breweries
 const DancingGnome = require("./dancing-gnome");
-const logger = require("../logger");
 
 const buildOnTapResponse = async function buildOnTapResponse(brewery) {
   if (brewery !== "dancing-gnome") {
     return {
-      speech: "<speak>Sorry, we only know about Dancing Gnome's taplist right now. Check back later for more breweries.</speak>",
+      speech:
+        "<speak>Sorry, we only know about Dancing Gnome's taplist right now. Check back later for more breweries.</speak>",
       display: "Sorry, we only know about Dancing Gnome's taplist right now. Check back later for more breweries.",
     };
   }
@@ -29,12 +29,12 @@ const buildOnTapResponse = async function buildOnTapResponse(brewery) {
   };
 };
 
-buildAboutBeerResponse = async function buildAboutBeerResponse(brewery, beer) {
+const buildAboutBeerResponse = async function buildAboutBeerResponse(brewery, beer) {
   return {
-    speech: `<speak>FUUUUUUUUCKKKKKK ${brewery}</speak>`,
-    display: `YOOOOOOUUUUUUUUUU ${beer}`,
-  }
-}
+    speech: `<speak>about_beer placeholder ${brewery}</speak>`,
+    display: `about_beer placeholder ${beer}`,
+  };
+};
 
 // Exports
 exports.buildOnTapResponse = buildOnTapResponse;
