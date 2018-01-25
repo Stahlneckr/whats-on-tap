@@ -3,13 +3,14 @@ const puppeteer = require("puppeteer");
 
 const DancingGnome = function DancingGnomeConstructor() {
   this.beerList = {
-    "time": '',
-    "onTap": []
-  }
+    time: null,
+    onTap: [],
+  };
 };
 
 DancingGnome.prototype.getDraftList = async function getDraftList() {
-  if((new Date() - this.beerList.time) > 21600000) { // every 6 hours
+  if (this.beerList.time && new Date() - this.beerList.time > 21600000) {
+    // every 6 hours
     return this.beerList.onTap;
   }
 
