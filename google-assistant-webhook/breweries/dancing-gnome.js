@@ -9,7 +9,7 @@ const DancingGnome = function DancingGnomeConstructor() {
 };
 
 DancingGnome.prototype.getDraftList = async function getDraftList() {
-  if (this.beerList.time && new Date() - this.beerList.time > 21600000) {
+  if (this.beerList.time && new Date() - this.beerList.time < 21600000) {
     // every 6 hours
     return this.beerList.onTap;
   }

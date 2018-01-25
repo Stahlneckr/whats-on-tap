@@ -25,6 +25,7 @@ const whatsOnTapWebhook = async function whatsOnTapWebhook(req, res) {
       res.json(response);
       break;
     }
+    case 'welcome':
     case "on_tap": {
       const { brewery } = req.body.result.parameters;
       logger.debug(`brewery: ${brewery}`);
