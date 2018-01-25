@@ -19,7 +19,8 @@ const whatsOnTapWebhook = async function whatsOnTapWebhook(req, res) {
 
   switch (intent) {
     case "test": {
-      response.speech = "<speak>Test case. Initiating ones and zeros. Beep boop. <break time='250ms' /> Bop. <break time='500ms' /> Boop beep.</speak>";
+      response.speech =
+        "<speak>Test case. Initiating ones and zeros. Beep boop. <break time='250ms' /> Bop. <break time='500ms' /> Boop beep.</speak>";
       response.displayText = "Test case. Initiating ones and zeros. Beep boop. Bop. Boop beep.";
       res.json(response);
       break;
