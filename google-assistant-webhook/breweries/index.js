@@ -1,18 +1,32 @@
 // Breweries
 const DancingGnome = require("./dancing-gnome");
+const Hitchhiker = require("./hitchhiker");
+
+const breweryList = ["dancing-gnome", "hitchhiker"];
 
 const buildOnTapResponse = async function buildOnTapResponse(brewery) {
-  if (brewery !== "dancing-gnome") {
+  if (breweryList.indexOf(brewery) === -1) {
     return {
       speech:
-        "<speak>Sorry, we only know about Dancing Gnome's taplist right now. Check back later for more breweries.</speak>",
-      display: "Sorry, we only know about Dancing Gnome's taplist right now. Check back later for more breweries.",
+        "<speak>Sorry, we only know about Dancing Gnome and Hitchhiker's taplist right now. Check back later for more breweries.</speak>",
+      display:
+        "Sorry, we only know about Dancing Gnome and Hitchhiker's taplist right now. Check back later for more breweries.",
     };
   }
 
-  const beers = await DancingGnome.getDraftList();
+  let beers = [];
+  let breweryDisplayName = "";
   let beersSpeechStr = "";
   let beersDisplayStr = "";
+
+  if (brewery === "dancing-gnome") {
+    breweryDisplayName = "Dancing Gnome";
+    beers = await DancingGnome.getDraftList();
+  } else {
+    breweryDisplayName = "Hitchhiker";
+    beers = await Hitchhiker.getDraftList();
+  }
+
   beers.forEach((beer, i) => {
     if (i === beers.length - 1) {
       beersSpeechStr = `${beersSpeechStr} and ${beer} <break time='500ms' />`;
@@ -24,8 +38,8 @@ const buildOnTapResponse = async function buildOnTapResponse(brewery) {
   });
 
   return {
-    speech: `<speak>on tap at Dancing Gnome today we have ${beersSpeechStr} </speak>`,
-    display: `On tap at Dancing Gnome today we have: ${beersDisplayStr}`,
+    speech: `<speak>on tap at ${breweryDisplayName} today we have ${beersSpeechStr} </speak>`,
+    display: `On tap at ${breweryDisplayName} today we have: ${beersDisplayStr}`,
   };
 };
 
