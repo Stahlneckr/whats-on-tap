@@ -15,10 +15,10 @@ const buildOnTapResponse = async function buildOnTapResponse(brewery) {
   let beersDisplayStr = "";
   beers.forEach((beer, i) => {
     if (i === beers.length - 1) {
-      beersSpeechStr = `${beersSpeechStr} and ${beer} <break time='250ms' />`;
+      beersSpeechStr = `${beersSpeechStr} and ${beer} <break time='500ms' />`;
       beersDisplayStr = `${beersDisplayStr}and ${beer}.`;
     } else {
-      beersSpeechStr = `${beersSpeechStr} ${beer}<break time='250ms' />`;
+      beersSpeechStr = `${beersSpeechStr} ${beer}<break time='500ms' />`;
       beersDisplayStr = `${beersDisplayStr}${beer}, `;
     }
   });
