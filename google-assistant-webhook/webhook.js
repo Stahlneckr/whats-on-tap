@@ -10,7 +10,6 @@ const whatsOnTapWebhook = async function whatsOnTapWebhook(req, res) {
     displayText: "",
     data: {
       google: {
-        expect_user_response: false,
         is_ssml: true,
       },
     },
@@ -18,19 +17,20 @@ const whatsOnTapWebhook = async function whatsOnTapWebhook(req, res) {
   };
 
   switch (intent) {
-    case "test": {
-      response.speech =
-        "<speak>Test case. Initiating ones and zeros. Beep boop. <break time='250ms' /> Bop. <break time='500ms' /> Boop beep.</speak>";
-      response.displayText = "Test case. Initiating ones and zeros. Beep boop. Bop. Boop beep.";
-      res.json(response);
-      break;
-    }
     case "welcome":
     case "on-tap": {
       const { brewery } = req.body.result.parameters;
       logger.debug(`brewery: ${brewery}`);
 
       const builtResponse = await Brewery.buildOnTapResponse(brewery);
+      response.speech = builtResponse.speech;
+      response.displayText = builtResponse.display;
+
+      res.json(response);
+      break;
+    }
+    case "what-breweries": {
+      const builtResponse = await Brewery.buildWhatBreweriesResponse();
       response.speech = builtResponse.speech;
       response.displayText = builtResponse.display;
 

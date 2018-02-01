@@ -2,18 +2,14 @@ const logger = require("../logger");
 const puppeteer = require("puppeteer");
 
 const Hitchhiker = function HitchhikerConstructor() {
-  this.beerList = {
-    time: null,
-    onTap: [],
-  };
+  this.beerList = [];
 };
 
-Hitchhiker.prototype.getDraftList = async function getDraftList() {
-  if (this.beerList.time && new Date() - this.beerList.time < 21600000) {
-    // every 6 hours
-    return this.beerList.onTap;
-  }
+Hitchhiker.prototype.getDraftList = function getDraftList() {
+  return this.beerList;
+};
 
+Hitchhiker.prototype.pullDraftList = async function getDraftList() {
   console.time("pupstartup");
   const browser = await puppeteer.launch().catch((error) => logger.error(error));
   const page = await browser.newPage().catch((error) => logger.error(error));
@@ -45,11 +41,10 @@ Hitchhiker.prototype.getDraftList = async function getDraftList() {
     })
     .catch((error) => logger.error(error));
 
-  // browser.close();
+  browser.close();
 
   logger.debug(onTap);
-  this.beerList.time = new Date();
-  this.beerList.onTap = onTap;
+  this.beerList = onTap;
   return onTap;
 };
 

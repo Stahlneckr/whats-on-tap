@@ -1,15 +1,15 @@
 const logger = require("../logger");
 const puppeteer = require("puppeteer");
 
-const DancingGnome = function DancingGnomeConstructor() {
+const GristHouse = function GristHouseConstructor() {
   this.beerList = [];
 };
 
-DancingGnome.prototype.getDraftList = function getDraftList() {
+GristHouse.prototype.getDraftList = function getDraftList() {
   return this.beerList;
 };
 
-DancingGnome.prototype.pullDraftList = async function getDraftList() {
+GristHouse.prototype.pullDraftList = async function getDraftList() {
   console.time("pupstartup");
   const browser = await puppeteer.launch().catch((error) => logger.error(error));
   const page = await browser.newPage().catch((error) => logger.error(error));
@@ -27,10 +27,10 @@ DancingGnome.prototype.pullDraftList = async function getDraftList() {
       request.abort();
     else request.continue();
   });
-  await page.goto("http://www.dancinggnomebeer.com/the-beer/").catch((error) => logger.error(error));
+  await page.goto("http://gristhouse.com/tap-list/").catch((error) => logger.error(error));
   console.timeEnd("pagegoto");
   const onTap = await page
-    .$$eval(".index-section-wrapper .sqs-block-content h2", (els) => {
+    .$$eval(".motopress-text-obj h1", (els) => {
       const beers = [];
       els.forEach((el) => {
         if (el.innerText !== "") {
@@ -48,4 +48,4 @@ DancingGnome.prototype.pullDraftList = async function getDraftList() {
   return onTap;
 };
 
-module.exports = new DancingGnome();
+module.exports = new GristHouse();

@@ -1,15 +1,15 @@
 const logger = require("../logger");
 const puppeteer = require("puppeteer");
 
-const DancingGnome = function DancingGnomeConstructor() {
+const Roundabout = function RoundaboutConstructor() {
   this.beerList = [];
 };
 
-DancingGnome.prototype.getDraftList = function getDraftList() {
+Roundabout.prototype.getDraftList = function getDraftList() {
   return this.beerList;
 };
 
-DancingGnome.prototype.pullDraftList = async function getDraftList() {
+Roundabout.prototype.pullDraftList = async function getDraftList() {
   console.time("pupstartup");
   const browser = await puppeteer.launch().catch((error) => logger.error(error));
   const page = await browser.newPage().catch((error) => logger.error(error));
@@ -27,16 +27,23 @@ DancingGnome.prototype.pullDraftList = async function getDraftList() {
       request.abort();
     else request.continue();
   });
-  await page.goto("http://www.dancinggnomebeer.com/the-beer/").catch((error) => logger.error(error));
+  await page.goto("http://roundaboutbeer.com/on-tap/").catch((error) => logger.error(error));
   console.timeEnd("pagegoto");
   const onTap = await page
-    .$$eval(".index-section-wrapper .sqs-block-content h2", (els) => {
+    .$$eval(".entry-content p span,u", (els) => {
       const beers = [];
-      els.forEach((el) => {
-        if (el.innerText !== "") {
-          beers.push(el.innerText);
+      // eslint-disable-next-line
+      els.some((el) => {
+        let text = el.innerText.trim();
+        text = text.replace(":", "");
+        if (text.toLowerCase().indexOf("bottle") !== -1) {
+          return true;
+        }
+        if (text !== "" && beers.indexOf(text) === -1) {
+          beers.push(text);
         }
       });
+      beers.shift();
       return beers;
     })
     .catch((error) => logger.error(error));
@@ -48,4 +55,4 @@ DancingGnome.prototype.pullDraftList = async function getDraftList() {
   return onTap;
 };
 
-module.exports = new DancingGnome();
+module.exports = new Roundabout();
