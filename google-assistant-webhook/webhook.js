@@ -10,6 +10,7 @@ const whatsOnTapWebhook = async function whatsOnTapWebhook(req, res) {
     displayText: "",
     data: {
       google: {
+        'expect_user_response': false,
         is_ssml: true,
       },
     },
